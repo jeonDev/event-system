@@ -12,18 +12,19 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        consumerListenerStart();
-        producerMain();
+        Thread thread = consumerListenerStart();
+        producerMain(thread);
     }
-    private static void consumerListenerStart() {
+    private static Thread consumerListenerStart() {
         Consumer consumer = new ConsumerV1();
         ConsumerListener consumerListener = new ConsumerListenerV1(consumer);
         Thread thread = new Thread(consumerListener);
         thread.setDaemon(true);
         thread.start();
+        return thread;
     }
 
-    private static void producerMain() {
+    private static void producerMain(Thread thread) {
         Producer producer = new ProducerV1();
         boolean isLoop = true;
 
@@ -33,6 +34,8 @@ public class Main {
             String data = scanner.next();
             if ("q".equals(data)) {
                 isLoop = false;
+            } else if ("s".equals(data)) {
+                thread.interrupt();
             }
             producer.offer(data);
         }
