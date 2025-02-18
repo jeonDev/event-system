@@ -1,8 +1,10 @@
 package org.event.core.consumer.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.event.core.consumer.Consumer;
 import org.event.core.consumer.ConsumerListener;
 
+@Slf4j
 public class ConsumerListenerV1 implements ConsumerListener {
     private boolean isLoop = true;
     private final Consumer consumer;
@@ -14,11 +16,11 @@ public class ConsumerListenerV1 implements ConsumerListener {
     @Override
     public void listener() {
         while (isLoop) {
-            System.out.println("Loop!");
+            log.info("Loop!");
             Object data = consumer.poll();
 
             if (data != null) {
-                System.out.println(data);
+                log.info("Consumer Data : {}", data);
             }
 
             try {

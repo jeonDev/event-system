@@ -1,8 +1,11 @@
 package org.event.core;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+@Slf4j
 public class EventQueue {
     private static EventQueue instance;
     private final Queue<Object> queue;
@@ -22,11 +25,11 @@ public class EventQueue {
 
     public void offer(Object o) {
         if (queue.size() >= MAX_SIZE) {
-            System.out.println("Queue Size Max");
+            log.warn("Queue Size Max");
             return;
         }
         queue.offer(o);
-        System.out.println(queue.toString());
+        log.info("Event Queue : {}", queue.toString());
     }
 
     public Object poll() {
@@ -36,7 +39,4 @@ public class EventQueue {
         return queue.poll();
     }
 
-    public void log() {
-        System.out.println(queue.toString());
-    }
 }

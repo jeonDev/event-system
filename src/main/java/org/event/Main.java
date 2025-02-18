@@ -1,5 +1,6 @@
 package org.event;
 
+import lombok.extern.slf4j.Slf4j;
 import org.event.core.consumer.Consumer;
 import org.event.core.consumer.ConsumerListener;
 import org.event.core.consumer.impl.ConsumerListenerV1;
@@ -9,6 +10,7 @@ import org.event.core.producer.impl.ProducerV1;
 
 import java.util.Scanner;
 
+@Slf4j
 public class Main {
     public static void main(String[] args) {
 
@@ -30,7 +32,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         while (isLoop) {
-            System.out.println("입력 : ");
+            log.info("입력 : ");
             String data = scanner.next();
             if ("q".equals(data)) {
                 isLoop = false;
