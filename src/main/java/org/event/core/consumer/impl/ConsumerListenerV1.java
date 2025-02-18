@@ -22,10 +22,15 @@ public class ConsumerListenerV1 implements ConsumerListener {
             }
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 isLoop = false;
             }
         }
+    }
+
+    @Override
+    public void run() {
+        listener();
     }
 }
