@@ -3,6 +3,7 @@ package org.event.core.producer.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.event.core.EventQueue;
 import org.event.core.producer.Producer;
+import org.event.core.type.Topic;
 
 @Slf4j
 public class ProducerV1 implements Producer {
@@ -13,8 +14,8 @@ public class ProducerV1 implements Producer {
     }
 
     @Override
-    public void offer(Object data) {
-        log.info("Queue Data Offer : {}", data.toString());
-        eventQueue.offer(data);
+    public void offer(Topic topic) {
+        log.info("Queue Data Offer : {}", topic.data().toString());
+        eventQueue.offer(topic);
     }
 }

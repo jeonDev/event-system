@@ -7,6 +7,7 @@ import org.event.core.consumer.impl.ConsumerListenerV1;
 import org.event.core.consumer.impl.ConsumerV1;
 import org.event.core.producer.Producer;
 import org.event.core.producer.impl.ProducerV1;
+import org.event.core.type.Topic;
 
 import java.util.Scanner;
 
@@ -31,14 +32,32 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         while (isLoop) {
-            log.info("입력 : ");
-            String data = scanner.next();
-            if ("q".equals(data)) {
-                isLoop = false;
-            } else if ("s".equals(data)) {
-                thread.interrupt();
+            try {
+                log.info("Producer Loop!");
+                System.out.print("Topic 입력 : ");
+                String topicData = scanner.next();
+                exit(topicData);
+
+                System.out.print("Data 입력 : ");
+                String data = scanner.next();
+
+                Topic topic = new Topic(topicData, data);
+                producer.offer(topic);
+
+            } catch (Exception e) {
+                log.error("탈출 ~~~~~~~~");
+                String message = e.getMessage();
+                if ("q".equals(message)) isLoop = false;
+                if ("s".equals(message)) thread.interrupt();
             }
-            producer.offer(data);
+        }
+    }
+
+    private static void exit(String data) {
+        if ("q".equals(data)) {
+            throw new RuntimeException("q");
+        } else if ("s".equals(data)) {
+            throw new RuntimeException("s");
         }
     }
 }
