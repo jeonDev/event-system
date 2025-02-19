@@ -17,17 +17,15 @@ public class ConsumerListenerV1 implements ConsumerListener {
     public void listener() {
         while (isLoop) {
             log.info("Loop!");
-            Object data = consumer.poll();
-
-            if (data != null) {
-                log.info("Consumer Data : {}", data);
-            }
 
             try {
-                Thread.sleep(1000);
+                Object data = consumer.poll();
+                log.info("Consume : {}", data.toString());
             } catch (InterruptedException e) {
+                log.error("Interrupt");
                 isLoop = false;
             }
+
         }
     }
 

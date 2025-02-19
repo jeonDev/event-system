@@ -21,7 +21,6 @@ public class Main {
         Consumer consumer = new ConsumerV1();
         ConsumerListener consumerListener = new ConsumerListenerV1(consumer);
         Thread thread = new Thread(consumerListener);
-        thread.setDaemon(true);
         thread.start();
         return thread;
     }

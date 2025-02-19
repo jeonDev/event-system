@@ -11,7 +11,7 @@ public class ConsumerV1 implements Consumer {
     }
 
     @Override
-    public Object poll() {
+    public Object poll() throws InterruptedException {
         return eventQueue.poll();
     }
 }
