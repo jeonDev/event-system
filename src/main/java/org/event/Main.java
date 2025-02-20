@@ -1,9 +1,8 @@
 package org.event;
 
 import lombok.extern.slf4j.Slf4j;
+import org.event.core.EventQueue;
 import org.event.core.consumer.Consumer;
-import org.event.core.consumer.ConsumerListener;
-import org.event.core.consumer.impl.ConsumerListenerV1;
 import org.event.core.consumer.impl.ConsumerV1;
 import org.event.core.producer.Producer;
 import org.event.core.producer.impl.ProducerV1;
@@ -19,8 +18,7 @@ public class Main {
         producerMain(thread);
     }
     private static Thread consumerListenerStart() {
-        Consumer consumer = new ConsumerV1();
-        ConsumerListener consumerListener = new ConsumerListenerV1(consumer);
+        Consumer consumerListener = new ConsumerV1(EventQueue.getInstance());
         Thread thread = new Thread(consumerListener);
         thread.start();
         return thread;
