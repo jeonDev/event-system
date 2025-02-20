@@ -3,6 +3,7 @@ package org.event.core.consumer.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.event.core.EventQueue;
 import org.event.core.consumer.Consumer;
+import org.event.core.type.Topic;
 
 @Slf4j
 public class ConsumerV1 implements Consumer {
@@ -19,8 +20,8 @@ public class ConsumerV1 implements Consumer {
             log.info("Loop!");
 
             try {
-                Object data = eventQueue.poll();
-                log.info("Consume : {}", data.toString());
+                Topic data = (Topic) eventQueue.poll();
+                log.info("Consume[{}] : {}", data.topic(), data.data());
             } catch (InterruptedException e) {
                 log.error("Interrupt");
                 isLoop = false;
