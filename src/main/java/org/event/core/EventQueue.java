@@ -31,6 +31,7 @@ public class EventQueue implements Runnable {
         this.condition = lock.newCondition();
 
         Thread thread = new Thread(this, "Consumer-Listener");
+        thread.setDaemon(true);
         thread.start();
 
     }
