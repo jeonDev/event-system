@@ -1,7 +1,7 @@
 package org.event.core;
 
 import lombok.extern.slf4j.Slf4j;
-import org.event.core.type.Topic;
+import org.event.core.topic.Topic;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -31,7 +31,7 @@ public class EventQueue implements Runnable {
         this.condition = lock.newCondition();
 
         Thread thread = new Thread(this, "Consumer-Listener");
-        thread.setDaemon(true);
+//        thread.setDaemon(true);
         thread.start();
 
     }
@@ -76,11 +76,11 @@ public class EventQueue implements Runnable {
 
     private void consumerThreadStart(Object queuePollData) {
         log.info("consumer Thread Start");
-        if (queuePollData instanceof Topic data) {
-            log.info("consume : {} {}", data.topic(), data.data());
+        if (queuePollData instanceof Topic<?> data) {
+            log.info("consume : {} {}", data.getTopic(), data.getTopicListener());
             Thread thread = new Thread(() -> {
-                log.info("Type : {}", this.getClass());
-                // TODO:
+                data.getTopicListener()
+                        .listener(data.getTopic());
             }, "Consumer");
 
             thread.start();
